@@ -1,0 +1,164 @@
+{% extends 'html/base.html' %}
+{% block title %}
+   Contact
+{% endblock %}
+
+{% block content %}
+<html>
+    <body class="bg-gray-900">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 container mx-auto px-4 py-16">
+            <div class="md:flex items-center justify-center md:order-2">
+                <form class="max-w-xl mx-auto w-80" id="contactForm" action="/contact" method="post">
+                    <div class="mb-6">
+                        <br>
+                        <br>
+                        <br>
+                        <label for="name" class="block text-gray-300 font-medium mb-2">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name" class="bg-gray-800 rounded-lg py-2 px-4 w-full text-gray-200 focus:outline-none focus:ring focus:ring-blue-400" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="email" class="block text-gray-300 font-medium mb-2">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Your Email" class="bg-gray-800 rounded-lg py-2 px-4 w-full text-gray-200 focus:outline-none focus:ring focus:ring-blue-400" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="subject" class="block text-gray-300 font-medium mb-2">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="Subject" class="bg-gray-800 rounded-lg py-2 px-4 w-full text-gray-200 focus:outline-none focus:ring focus:ring-blue-400" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="phone" class="block text-gray-300 font-medium mb-2">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" class="bg-gray-800 rounded-lg py-2 px-4 w-full text-gray-200 focus:outline-none focus:ring focus:ring-blue-400" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="message" class="block text-gray-300 font-medium mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Your Message" class="bg-gray-800 rounded-lg py-2 px-4 w-full text-gray-200 focus:outline-none focus:ring focus:ring-blue-400" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg focus:outline-none focus:ring focus:ring-blue-400">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="relative md:flex items-center justify-center md:order-1">
+                
+                <div class="text-white text-center relative z-10 p-4">
+                    <p class="text-gray-700 dark:text-gray-300 font-medium leading-6">
+                        Get in touch with  <span  class="text-blue-500">Your Company name</span>.
+                    </p>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mt-4 leading-6">
+                        Please use the contact form below to get in touch with us. We appreciate your inquiry and will respond promptly to ensure your digital needs are met.
+                    </p>
+                    <p class="text-gray-700 dark:text-gray-300 font-medium mt-4 leading-6">
+                    </p>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes moveUp {
+                  0%, 100% {
+                    transform: translateY(0);
+                  }
+                  50% {
+                    transform: translateY(-40px);
+                  }
+                }
+              
+                .animated-circle {
+                  width: 60px;
+                  height: 60px;
+                  opacity: 40%;
+                  background-color: #3490dc;
+                  border-radius: 50%;
+                  position: absolute;
+                  animation: moveUp 5s infinite;
+                }
+              
+                .animated-circle:nth-child(1) {
+                  top: 20%;
+                  left: 20%;
+                }
+              
+                .animated-circle:nth-child(2) {
+                  top: 50%;
+                  left: 50%;
+                }
+              
+                .animated-circle:nth-child(3) {
+                  top: 30%;
+                  right: 20%;
+                }
+              
+                .animated-circle:nth-child(4) {
+                  top: 70%;
+                  right: 10%;
+                }
+
+                .modal {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .modal-content {
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                }
+
+                #closeModal {
+                    cursor: pointer;
+                    color: #3490dc;
+                    font-size: 20px;
+                }
+            </style>
+            <div class="modal" style="display: none; z-index: 100;">
+                <div class="modal-content p-6 rounded-md shadow-md text-center" style="background-color: rgb(55, 65, 81); width: 40%;">
+                    
+                    <p class="mb-4 text-white">Your message has been submitted successfully. Please check your email for a confirmation and check your spam folder if needed.</p>
+                    <button id="closeModal" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:border-blue-300 transition duration-300 ease-in-out">Close</button>
+                </div>
+            </div>
+                        
+                    
+        <script>
+            document.getElementById('contactForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                showModal();
+            });
+
+            document.getElementById('closeModal').addEventListener('click', function () {
+                closeModal();
+            });
+
+            function showModal() {
+                document.querySelector('.modal').style.display = 'flex';
+
+                fetch('/contact', {
+                    method: 'POST',
+                    body: new FormData(document.getElementById('contactForm')),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => console.error('Error:', error));
+                document.getElementById('contactForm').reset();
+
+            }
+
+            function closeModal() {
+                document.querySelector('.modal').style.display = 'none';
+            }
+        </script>
+           
+        </div>
+    </body>
+</html>
+{% endblock %}
