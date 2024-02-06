@@ -5,7 +5,8 @@ import datetime
 import pytz
 
 class emailContact:
-
+    smpt_host = ""
+    smpt_port = ""
     def showDatetime():
         format = "Inquiry Date: %d/%m/%y | %I:%M%p EST"
         converted_tz = pytz.timezone('US/Eastern')
@@ -62,7 +63,7 @@ class emailContact:
 
                  # Enter you SMPT information to send emails  
 
-        with smtplib.SMTP('your_smpt_server', 587) as server:
+        with smtplib.SMTP(smpt_host, smpt_port) as server:
             server.starttls()
 
             server.login(sender_email, sender_password)
@@ -112,7 +113,7 @@ class emailContact:
         message.attach(MIMEText(html_body, 'html'))
 
          # Enter you SMPT information to send emails 
-        with smtplib.SMTP('your_smpt_server', 587) as server:
+        with smtplib.SMTP(smpt_host, smpt_port) as server:
             server.starttls()
 
             server.login(sender_email, sender_password)
