@@ -13,7 +13,7 @@ To run Contact Form, follow these steps:
 
 1. Clone the repository to your local machine:
 ```
-git clone https://github.com/ajdev05/trackapp.git
+git clone https://github.com/ajdev05/contactForm.git
 ```
 
 
