@@ -6,7 +6,7 @@ import pytz
 
 class emailContact:
     smpt_host = ""
-    smpt_port = int("")
+    smpt_port = 
     def showDatetime():
         format = "Inquiry Date: %d/%m/%y | %I:%M%p EST"
         converted_tz = pytz.timezone('US/Eastern')
